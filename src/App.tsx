@@ -6,7 +6,11 @@ function App(): React.JSX.Element {
         <div className="App">
             <header className="App-header">
                 Katlego Matsipane UD CISC275 with React Hooks and TypeScript
+                Hello World
             </header>
+            {/*Task 1 */}
+            <h1>Hello World</h1>
+
             <p>
                 Edit <code>src/App.tsx</code> and save. This page will
                 automatically reload.
