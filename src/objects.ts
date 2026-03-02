@@ -8,9 +8,19 @@ import { Question, QuestionType } from "./interfaces/question";
 export function makeBlankQuestion(
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question {
-    return {};
+    const question1: Question = {
+        id: id,
+        name: name,
+        type: type,
+        body: "",
+        options: [],
+        expected: "",
+        points: 1,
+        published: false,
+    };
+    return question1;
 }
 
 /**
@@ -115,7 +125,7 @@ export function mergeQuestion(
     id: number,
     name: string,
     contentQuestion: Question,
-    { points }: { points: number }
+    { points }: { points: number },
 ): Question {
     return contentQuestion;
 }
