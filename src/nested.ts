@@ -1,3 +1,4 @@
+import { text } from "stream/consumers";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
 
@@ -86,7 +87,7 @@ export function sumPublishedPoints(questions: Question[]): number {
     const qs: Question[] = questions.filter(
         (question: Question): Boolean => question.published,
     );
-    const sum_pub: Question[] = qs.reduce(
+    const sum_pub: number = qs.reduce(
         (currentTotal: number, question: Question) =>
             currentTotal + question.points,
         0,
@@ -129,7 +130,15 @@ export function toCSV(questions: Question[]): string {
  * making the `text` an empty string, and using false for both `submitted` and `correct`.
  */
 export function makeAnswers(questions: Question[]): Answer[] {
-    return [];
+    const ans: Answer[] = questions.map(
+        (question: Question): Answer => ({
+            questionId: question.id,
+            text: "",
+            submitted: false,
+            correct: false,
+        }),
+    );
+    return ans;
 }
 
 /***
