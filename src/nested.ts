@@ -214,7 +214,17 @@ export function renameQuestionById(
     targetId: number,
     newName: string,
 ): Question[] {
-    return [];
+    const index: number = questions.findIndex(
+        (question: Question): Boolean => question.id === targetId,
+    );
+    const qs: Question[] = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options: [...question.options],
+        }),
+    );
+    qs[index].name = newName;
+    return qs;
 }
 
 /***
@@ -229,7 +239,20 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType,
 ): Question[] {
-    return [];
+    const index: number = questions.findIndex(
+        (question: Question): Boolean => question.id === targetId,
+    );
+    const qs: Question[] = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options: [...question.options],
+        }),
+    );
+    if (newQuestionType !== "multiple_choice_question") {
+        qs[index].options = [];
+    }
+    qs[index].type = newQuestionType;
+    return qs;
 }
 
 /**
