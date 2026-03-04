@@ -1,6 +1,7 @@
 import { text } from "stream/consumers";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
+import { makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -191,7 +192,16 @@ export function addNewQuestion(
     name: string,
     type: QuestionType,
 ): Question[] {
-    return [];
+    const ques1: Question[] = [
+        ...questions.map(
+            (question: Question): Question => ({
+                ...question,
+                options: [...question.options],
+            }),
+        ),
+        makeBlankQuestion(id, name, type),
+    ];
+    return ques1;
 }
 
 /***
