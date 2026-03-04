@@ -37,7 +37,10 @@ export function findQuestion(
     questions: Question[],
     id: number,
 ): Question | null {
-    return null;
+    const index: number = questions.findIndex(
+        (question: Question): Boolean => id === question.id,
+    );
+    return index === -1 ? null : questions[index];
 }
 
 /**
