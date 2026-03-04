@@ -1,7 +1,7 @@
 import { text } from "stream/consumers";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -170,9 +170,7 @@ export function sameType(questions: Question[]): boolean {
             (question: Question): Boolean =>
                 question.type === "multiple_choice_question",
         );
-    }
-
-    if (questions[0].type === "short_answer_question") {
+    } else if (questions[0].type === "short_answer_question") {
         return questions.every(
             (question: Question): Boolean =>
                 question.type === "short_answer_question",
@@ -271,7 +269,21 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string,
 ): Question[] {
-    return [];
+    const index: number = questions.findIndex(
+        (question: Question): Boolean => question.id === targetId,
+    );
+    const qs: Question[] = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options: [...question.options],
+        }),
+    );
+    if (targetOptionIndex === -1) {
+        qs[index].options = [...qs[index].options, newOption];
+    } else {
+        qs[index].options[targetOptionIndex] = newOption;
+    }
+    return qs;
 }
 
 /***
@@ -285,5 +297,19 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number,
 ): Question[] {
-    return [];
+    const index: number = questions.findIndex(
+        (question: Question): Boolean => question.id === targetId,
+    );
+    const qs: Question[] = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options: [...question.options],
+        }),
+    );
+
+    const dup: Question = duplicateQuestion(targetId, questions[index]);
+    dup.id = newId;
+    qs.splice(index + 1, 0, dup);
+
+    return qs;
 }
