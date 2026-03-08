@@ -13,6 +13,7 @@ const PEOPLE = [
 export function ChooseTeam(): React.JSX.Element {
     const [allOptions, setAllOptions] = useState<string[]>(PEOPLE);
     const [team, setTeam] = useState<string[]>([]);
+    console.log("Choose team component is rendering!");
 
     function chooseMember() {
         /*
