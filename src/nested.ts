@@ -1,4 +1,3 @@
-import { text } from "stream/consumers";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
 import { duplicateQuestion, makeBlankQuestion } from "./objects";
@@ -165,18 +164,13 @@ export function sameType(questions: Question[]): boolean {
     if (questions.length === 0) {
         return true;
     }
-    if (questions[0].type === "multiple_choice_question") {
-        return questions.every(
-            (question: Question): Boolean =>
-                question.type === "multiple_choice_question",
-        );
-    } else if (questions[0].type === "short_answer_question") {
-        return questions.every(
-            (question: Question): Boolean =>
-                question.type === "short_answer_question",
-        );
-    }
-    return false;
+    // Get the type of the first question
+    const firstType = questions[0].type;
+
+    // Check if all questions have the same type as the first
+    return questions.every(
+        (question: Question): boolean => question.type === firstType,
+    );
 }
 
 /***
